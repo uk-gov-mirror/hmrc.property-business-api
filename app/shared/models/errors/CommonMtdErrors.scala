@@ -59,6 +59,12 @@ object CalculationIdFormatError extends MtdError("FORMAT_CALCULATION_ID", "The p
 
 object StringFormatError extends MtdError(code = "FORMAT_STRING", message = "The supplied string format is not valid", BAD_REQUEST)
 
+object RuleFormatPropertyNameError extends MtdError("FORMAT_PROPERTY_NAME", "The provided property name is invalid", BAD_REQUEST)
+
+object RuleFormatEndDateError extends MtdError("FORMAT_END_DATE", "The provided end date is invalid", BAD_REQUEST)
+
+object RuleFormatEndReasonError extends MtdError("FORMAT_END_Reason", "The provided end reason is invalid", BAD_REQUEST)
+
 //Standard Errors
 object NotFoundError extends MtdError("MATCHING_RESOURCE_NOT_FOUND", "Matching resource not found", NOT_FOUND)
 
@@ -130,6 +136,20 @@ object RuleEndBeforeStartDateError
     extends MtdError("RULE_END_DATE_BEFORE_START_DATE", "The supplied accounting period end date is before the start date", BAD_REQUEST)
 
 object RuleCountryCodeError extends MtdError("RULE_COUNTRY_CODE", "The country code is not a valid ISO 3166-1 alpha-3 country code", BAD_REQUEST)
+
+object RuleDuplicatePropertyNameError
+    extends MtdError("RULE_DUPLICATE_PROPERTY_NAME", "Foreign property name already exists for the same country", BAD_REQUEST)
+
+object RulePropertyOutsidePeriodError
+    extends MtdError("RULE_PROPERTY_OUTSIDE_PERIOD", "Foreign property is not within the income source period", BAD_REQUEST)
+
+object RuleEndDateAfterTaxYearEndError
+    extends MtdError("RULE_END_DATE_AFTER_TAX_YEAR_END", "The end date is after the end of the tax year", BAD_REQUEST)
+
+object RulePropertyBusinessCeasedError
+    extends MtdError("RULE_PROPERTY_BUSINESS_CEASED", "Foreign property business income source has ceased", BAD_REQUEST)
+
+object RuleMissingEndDetailsError extends MtdError("RULE_MISSING_END_DETAILS", "End date and end reason must be supplied together", BAD_REQUEST)
 
 //Stub Errors
 object RuleIncorrectGovTestScenarioError
