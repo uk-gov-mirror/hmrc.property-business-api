@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,15 +24,17 @@ import shared.models.errors.{CountryCodeFormatError, MtdError, RuleCountryCodeEr
 
 case class ResolveParsedCountryCode(path: String) {
 
+  private def addPathIfPresent(error: MtdError): MtdError = if (path.nonEmpty) error.withPath(path) else error
+
   def apply(value: String): Validated[List[MtdError], String] = {
     if (value.length != 3) {
-      Invalid(List(CountryCodeFormatError.withPath(path)))
+      Invalid(List(addPathIfPresent(CountryCodeFormatError)))
     } else if (permittedCustomCodes.contains(value)) {
       Valid(value)
     } else {
       Option(CountryCode.getByAlpha3Code(value)) match {
         case Some(_) => Valid(value)
-        case None    => Invalid(List(RuleCountryCodeError.withPath(path)))
+        case None    => Invalid(List(addPathIfPresent(RuleCountryCodeError)))
       }
     }
   }
